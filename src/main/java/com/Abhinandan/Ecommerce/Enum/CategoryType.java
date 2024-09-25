@@ -1,7 +1,11 @@
 package com.Abhinandan.Ecommerce.Enum;
 
 public enum CategoryType {
-    MENS,
-    WOMENS,
-    KIDS
+    FASHION,
+    TECHNOLOGY,
+    BEAUTY,
+    BABY,
+    GROCERY,
+    DECOR,
+    SPORTS,
 }

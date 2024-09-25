@@ -9,4 +9,6 @@ import java.util.List;
 public interface productService {
     productDto addProduct(productDto productDto) throws IOException;
     List<productDto> getAllProducts();
+    List<productDto> getAllProductsByName(String title);
+    boolean deleteProduct(Long id);
 }

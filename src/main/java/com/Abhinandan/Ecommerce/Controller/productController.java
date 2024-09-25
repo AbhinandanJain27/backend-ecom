@@ -32,4 +32,19 @@ public class productController {
         return ResponseEntity.ok(productDtos);
     }
 
+    @GetMapping("/search/{name}")
+    public ResponseEntity <List<productDto>> getAllProductsByName(@PathVariable String name){
+        List<productDto> productDtos = this.productService.getAllProductsByName(name);
+        return ResponseEntity.ok(productDtos);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
+        boolean deleted = productService.deleteProduct(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build(); // Return 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // Return 404 Not Found
+        }
+    }
 }
