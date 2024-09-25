@@ -2,7 +2,6 @@ package com.Abhinandan.Ecommerce.Controller;
 
 import com.Abhinandan.Ecommerce.Entity.category;
 import com.Abhinandan.Ecommerce.Service.categoryServiceImpl;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import java.util.Optional;
 public class categoryController {
     @Autowired
     private categoryServiceImpl categoryService;
-    @PostMapping("/category")
+    @PostMapping("/addCategory")
     public ResponseEntity<category> createCategory(@RequestBody category category){
         return new ResponseEntity<category>(categoryService.saveCategory(category), HttpStatus.CREATED);
     }
@@ -27,7 +26,7 @@ public class categoryController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<category> getById(@PathVariable long id){
-        Optional<category> optionalCategory = categoryService.findById(id); // Assuming findByEmail exists
+        Optional<category> optionalCategory = categoryService.findById(id);
         return optionalCategory
                 .map(category -> {
                     category categoryDto = new category();

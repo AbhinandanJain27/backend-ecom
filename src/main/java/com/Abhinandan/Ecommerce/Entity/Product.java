@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Entity;
 
+import com.Abhinandan.Ecommerce.Dto.productDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -19,15 +20,27 @@ public class Product {
     private String productName;
     @JsonProperty("price")
     private double price;
-    @Lob@JsonProperty("description")
+    @Lob
+    @JsonProperty("description")
     private String Description;
     @Lob
     @JsonProperty("productId")
     @Column(columnDefinition = "longblob")
-    private byte[]img;
+    private byte[] img;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="category_id",nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private category category;
+
+    public productDto getDto() {
+        productDto productDto = new productDto();
+        productDto.setProductId(productId);
+        productDto.setProductName(productName);
+        productDto.setPrice(price);
+        productDto.setDescription(Description);
+        productDto.setByteImg(img);
+        productDto.setCategoryId(category.getCategoryId());
+        return productDto;
+    }
 }
