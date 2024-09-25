@@ -48,6 +48,11 @@ public class UserController {
 
         Optional<User> optionalUser = userService.findByEmail(email);
         if (optionalUser.isPresent()) {
+            AccountStatus status = optionalUser.get().getAccountStatus();
+            if(status == AccountStatus.BLOCKED){
+                response.put("message","Your Account Has been blocked");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            }
             User user = optionalUser.get();
             String hashedPassword = "";
             try {
@@ -102,6 +107,8 @@ public class UserController {
         }
     }
 
+
+    // Updating account status
     @PutMapping("/modifyAccountStatus/{email}")
     public ResponseEntity<User> updateAccountStatus(@PathVariable String email, @RequestBody User userDetails) {
         Optional<User> updatedUser = userService.updateAccountStatus(email, userDetails);
