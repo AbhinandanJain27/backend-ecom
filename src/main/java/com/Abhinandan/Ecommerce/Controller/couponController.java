@@ -1,6 +1,7 @@
 package com.Abhinandan.Ecommerce.Controller;
 
 import com.Abhinandan.Ecommerce.Entity.Coupons;
+import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.couponStatus;
 import com.Abhinandan.Ecommerce.Enum.discountType;
 import com.Abhinandan.Ecommerce.Service.couponServiceImpl;
@@ -69,5 +70,13 @@ public class couponController {
         } else {
             return ResponseEntity.notFound().build(); // Return 404 Not Found
         }
+    }
+
+    @PutMapping("/{email}")
+    public ResponseEntity<Coupons> updateCouponStatus(@PathVariable String email, Coupons coupon) {
+        Optional<Coupons> updatedCoupon = couponService.updateCoupon(email);
+
+        return updatedCoupon.map(ResponseEntity::ok)
+                .orElseGet(()-> ResponseEntity.notFound().build());
     }
 }

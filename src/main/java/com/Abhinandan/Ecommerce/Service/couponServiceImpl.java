@@ -11,23 +11,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class couponServiceImpl implements couponService{
+public class couponServiceImpl implements couponService {
     @Autowired
     private couponRepository couponRepository;
 
     @Override
-    public Coupons addCoupon(Coupons coupon){
+    public Coupons addCoupon(Coupons coupon) {
         coupon.setStatus(couponStatus.ACTIVE);
         return couponRepository.save(coupon);
     }
 
     @Override
-    public List<Coupons> getAllCoupons(){
+    public List<Coupons> getAllCoupons() {
         return couponRepository.findAll();
     }
 
     @Override
-    public Optional<Coupons> getCoupon(String name){
+    public Optional<Coupons> getCoupon(String name) {
         return couponRepository.findById(name);
     }
 
@@ -39,6 +39,17 @@ public class couponServiceImpl implements couponService{
             return true;
         }
         return false;
+    }
+
+    public Optional<Coupons> updateCoupon(String name) {
+        return couponRepository.findById(name).map(coupons -> {
+            if(coupons.getStatus().equals(couponStatus.ACTIVE)){
+                coupons.setStatus(couponStatus.EXPIRED);
+            }else{
+                coupons.setStatus(couponStatus.ACTIVE);
+            }
+            return couponRepository.save(coupons);
+        });
     }
 
 }
