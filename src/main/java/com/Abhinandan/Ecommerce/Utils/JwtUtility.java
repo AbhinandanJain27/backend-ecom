@@ -40,8 +40,9 @@ public class JwtUtility {
                 .parseClaimsJws(token)
                 .getBody();
     }
-// Is Token Valid Or not
-     public boolean validateToken(String token, UserDetails userDetails) {
+
+    // Is Token Valid Or not
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
@@ -71,7 +72,6 @@ public class JwtUtility {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 
 
 }
