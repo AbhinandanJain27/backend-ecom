@@ -8,11 +8,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
 @Table (name = "users")
-public class User {
+public class User implements UserDetails {
     @jakarta.persistence.Id
     @JsonProperty("email")
     private String email;
@@ -37,4 +42,15 @@ public class User {
         this.mobileNumber = mobileNumber;
         this.password = password;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
 }

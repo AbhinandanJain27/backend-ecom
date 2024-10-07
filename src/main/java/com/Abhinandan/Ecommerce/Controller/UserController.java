@@ -4,6 +4,7 @@ import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Enum.UserRole;
 import com.Abhinandan.Ecommerce.Service.UserService;
+import com.Abhinandan.Ecommerce.Utils.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtUtility jwtUtility;
     // Api For User Registration
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody User user){
@@ -55,6 +58,7 @@ public class UserController {
             }
             User user = optionalUser.get();
             String hashedPassword = "";
+            String token = jwtUtility.generateToken(new HashMap<>(),user);
             try {
                 hashedPassword = toHexString(getSHA(password));
             } catch (Exception e) {
@@ -64,6 +68,7 @@ public class UserController {
             if (hashedPassword.equals(user.getPassword())) {
                 response.put("message", "Login successful!");
                 response.put("role", user.getRole().name());
+                response.put("Token", token);
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Invalid password.");
