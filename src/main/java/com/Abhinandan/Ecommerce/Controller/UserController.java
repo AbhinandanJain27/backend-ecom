@@ -68,7 +68,13 @@ public class UserController {
             if (hashedPassword.equals(user.getPassword())) {
                 response.put("message", "Login successful!");
                 response.put("role", user.getRole().name());
-                response.put("Token", token);
+                response.put("token", token);
+                response.put("email", jwtUtility.getUsernameFromToken(token));
+
+//                response.addHeader("Access-Control-Expose-Headers","Authorization");
+//                response.addHeader("Access-Control-Allow-Headers","Authorization, X-PINGOTHER, Origin, X-Requested-With, content-Type, Accept, X-Custom-header");
+
+
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "Invalid password.");
