@@ -8,6 +8,7 @@ import com.Abhinandan.Ecommerce.Utils.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -70,10 +71,8 @@ public class UserController {
                 response.put("role", user.getRole().name());
                 response.put("token", token);
                 response.put("email", jwtUtility.getUsernameFromToken(token));
-
 //                response.addHeader("Access-Control-Expose-Headers","Authorization");
 //                response.addHeader("Access-Control-Allow-Headers","Authorization, X-PINGOTHER, Origin, X-Requested-With, content-Type, Accept, X-Custom-header");
-
 
                 return ResponseEntity.ok(response);
             } else {
@@ -87,6 +86,7 @@ public class UserController {
     }
 
     // Used for admin panel to get all the users and (provide a functionality to block a used or set the status as deleted)
+//    @PreAuthorize()
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
@@ -117,7 +117,6 @@ public class UserController {
             return ResponseEntity.notFound().build(); // Return 404 Not Found
         }
     }
-
 
     // Updating account status
     @PutMapping("/modifyAccountStatus/{email}")
