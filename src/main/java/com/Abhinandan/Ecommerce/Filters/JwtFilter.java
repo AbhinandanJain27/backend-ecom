@@ -38,9 +38,9 @@ public class JwtFilter extends OncePerRequestFilter {
             try {
                 final String jwtToken = getTokenFromRequest(request);
                 try {
-                    String email = jwtUtility.getUsernameFromToken(jwtToken);
+                    String email = extractEmail(jwtToken);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                    if (StringUtils.hasText(email) && jwtUtility.validateToken(jwtToken, userDetails)) {
+                    if (email != null && jwtUtility.validateToken(jwtToken, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities()
                         );
@@ -48,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     }
                 } catch (IllegalArgumentException e) {
-                    logger.info("Illegal Argument while fetching the username !!");
+                    logger.info("Illegal Argument while fetching the username !!"+e);
                 } catch (ExpiredJwtException e) {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     logger.info("Given jwt token is expired !!");
@@ -71,5 +71,12 @@ public class JwtFilter extends OncePerRequestFilter {
             return token.substring(7);
         }
         return null;
+    }
+
+    private String extractEmail(String token){
+        if(token==null || token.trim().isEmpty()){
+            throw new IllegalArgumentException("Token Can't be Empty.");
+        }
+        return jwtUtility.getUsernameFromToken(token);
     }
 }

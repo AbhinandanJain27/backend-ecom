@@ -28,6 +28,7 @@ public class UserController {
     private UserService userService;
     @Autowired
     private JwtUtility jwtUtility;
+
     // Api For User Registration
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody User user){
@@ -86,13 +87,14 @@ public class UserController {
     }
 
     // Used for admin panel to get all the users and (provide a functionality to block a used or set the status as deleted)
-//    @PreAuthorize()
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
     // Used for checks and getting data for profile section
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{email}")
     public ResponseEntity<User> getByEmail(@PathVariable String email){
         Optional<User> optionalUser = userService.findByEmail(email); // Assuming findByEmail exists
@@ -108,6 +110,7 @@ public class UserController {
     }
 
     // Delete a user or account closure
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {
         boolean deleted = userService.deleteUser(email);
@@ -119,6 +122,7 @@ public class UserController {
     }
 
     // Updating account status
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/modifyAccountStatus/{email}")
     public ResponseEntity<User> updateAccountStatus(@PathVariable String email, @RequestBody User userDetails) {
         Optional<User> updatedUser = userService.updateAccountStatus(email, userDetails);

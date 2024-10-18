@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class productController {
     @Autowired
     private productServiceImpl productService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addProduct")
     public ResponseEntity<productDto> addProduct(@ModelAttribute productDto productDto) throws IOException{
         productDto productDto1 = this.productService.addProduct(productDto);
@@ -37,6 +39,7 @@ public class productController {
         return ResponseEntity.ok(productDtos);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         boolean deleted = productService.deleteProduct(id);

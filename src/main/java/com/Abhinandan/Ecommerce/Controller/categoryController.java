@@ -5,6 +5,7 @@ import com.Abhinandan.Ecommerce.Service.IMPL.categoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class categoryController {
     @Autowired
     private categoryServiceImpl categoryService;
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addCategory")
     public ResponseEntity<category> createCategory(@RequestBody category category){
         return new ResponseEntity<category>(categoryService.saveCategory(category), HttpStatus.CREATED);
@@ -35,6 +37,8 @@ public class categoryController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         boolean deleted= categoryService.deleteUser(id);

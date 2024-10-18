@@ -7,6 +7,7 @@ import com.Abhinandan.Ecommerce.Service.IMPL.couponServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -19,6 +20,7 @@ public class couponController {
     @Autowired
     private couponServiceImpl couponService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addCoupon")
     public ResponseEntity<Coupons> addCoupon(@RequestBody Coupons coupon) {
         if(coupon.getCouponId() == null || coupon.getCouponId().isEmpty()) {
@@ -61,6 +63,7 @@ public class couponController {
     }
 
     // Delete a coupon
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{name}")
     public ResponseEntity<Void> deleteUser(@PathVariable String name) {
         boolean deleted = couponService.deleteCoupon(name);
@@ -71,6 +74,7 @@ public class couponController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{email}")
     public ResponseEntity<Coupons> updateCouponStatus(@PathVariable String email, Coupons coupon) {
         Optional<Coupons> updatedCoupon = couponService.updateCoupon(email);
