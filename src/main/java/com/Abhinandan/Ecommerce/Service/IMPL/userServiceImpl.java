@@ -1,8 +1,11 @@
-package com.Abhinandan.Ecommerce.Service;
+package com.Abhinandan.Ecommerce.Service.IMPL;
 
+import com.Abhinandan.Ecommerce.Entity.Orders;
 import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Repository.UserRepository;
+import com.Abhinandan.Ecommerce.Repository.orderRepository;
+import com.Abhinandan.Ecommerce.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +17,17 @@ public class userServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private orderRepository orderRepository;
+
     @Override
     public User saveUser(User user) {
+
+        Orders order = new Orders();
+
+        order.setUser(user);
+        orderRepository.save(order);
+
         return userRepository.save(user);
     }
 

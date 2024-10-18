@@ -1,8 +1,7 @@
 package com.Abhinandan.Ecommerce.Controller;
 
 import com.Abhinandan.Ecommerce.Dto.productDto;
-import com.Abhinandan.Ecommerce.Entity.Product;
-import com.Abhinandan.Ecommerce.Service.productServiceImpl;
+import com.Abhinandan.Ecommerce.Service.IMPL.productServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

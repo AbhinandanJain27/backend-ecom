@@ -1,10 +1,11 @@
-package com.Abhinandan.Ecommerce.Service;
+package com.Abhinandan.Ecommerce.Service.IMPL;
 
 import com.Abhinandan.Ecommerce.Dto.productDto;
 import com.Abhinandan.Ecommerce.Entity.Product;
 import com.Abhinandan.Ecommerce.Entity.category;
 import com.Abhinandan.Ecommerce.Repository.ProductRepository;
 import com.Abhinandan.Ecommerce.Repository.categoryRepository;
+import com.Abhinandan.Ecommerce.Service.productService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class productServiceImpl implements productService{
+public class productServiceImpl implements productService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired

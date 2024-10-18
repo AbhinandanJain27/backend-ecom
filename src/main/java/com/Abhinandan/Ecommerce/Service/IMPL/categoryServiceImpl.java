@@ -1,14 +1,15 @@
-package com.Abhinandan.Ecommerce.Service;
+package com.Abhinandan.Ecommerce.Service.IMPL;
 
 import com.Abhinandan.Ecommerce.Entity.category;
 import com.Abhinandan.Ecommerce.Repository.categoryRepository;
+import com.Abhinandan.Ecommerce.Service.categoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 @Service
-public class categoryServiceImpl implements categoryService{
+public class categoryServiceImpl implements categoryService {
     @Autowired
     private categoryRepository categoryRepository;
     @Override

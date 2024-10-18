@@ -1,9 +1,9 @@
-package com.Abhinandan.Ecommerce.Service;
+package com.Abhinandan.Ecommerce.Service.IMPL;
 
 import com.Abhinandan.Ecommerce.Entity.Coupons;
-import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.couponStatus;
 import com.Abhinandan.Ecommerce.Repository.couponRepository;
+import com.Abhinandan.Ecommerce.Service.couponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

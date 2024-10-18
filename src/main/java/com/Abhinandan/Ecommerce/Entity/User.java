@@ -36,13 +36,6 @@ public class User implements UserDetails {
     private byte[] img;
     public User(){}
 
-    public User(String name, String email, long mobileNumber, String password, AccountStatus accountStatus) {
-        Name = name;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.password = password;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

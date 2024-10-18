@@ -1,12 +1,11 @@
 package com.Abhinandan.Ecommerce.Enum;
 
 public enum orderStatus {
-    PENDING,
     PLACED,
     CONFIRMED,
     PACKAGED,
-    CANCELLED,
+    SHIPPED,
     DELIVERED,
-    RETURNED,
-    SHIPPED
+    CANCELLED,
+    RETURNED
 }
