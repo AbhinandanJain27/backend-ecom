@@ -1,16 +1,19 @@
 package com.Abhinandan.Ecommerce.Controller;
 
+import com.Abhinandan.Ecommerce.Dto.profileDto;
 import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Enum.UserRole;
 import com.Abhinandan.Ecommerce.Service.UserService;
 import com.Abhinandan.Ecommerce.Utils.JwtUtility;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -94,7 +97,7 @@ public class UserController {
     }
 
     // Used for checks and getting data for profile section
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{email}")
     public ResponseEntity<User> getByEmail(@PathVariable String email){
         Optional<User> optionalUser = userService.findByEmail(email); // Assuming findByEmail exists
@@ -104,6 +107,7 @@ public class UserController {
                     userDto.setEmail(user.getEmail());
                     userDto.setName(user.getName());
                     userDto.setMobileNumber(user.getMobileNumber());
+                    userDto.setRole(user.getRole());
                     return ResponseEntity.ok(userDto);
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -128,6 +132,13 @@ public class UserController {
         Optional<User> updatedUser = userService.updateAccountStatus(email, userDetails);
         return updatedUser.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    @PutMapping("/updateUserProfile/{email}")
+    public ResponseEntity<profileDto> updateUserProfile(@PathVariable String email, @ModelAttribute profileDto profile) throws IOException {
+        profileDto updatedUser = userService.updateUserProfile(email, profile);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException

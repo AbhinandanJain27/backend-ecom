@@ -24,9 +24,11 @@ public class Product {
     @JsonProperty("description")
     private String Description;
     @Lob
-    @JsonProperty("productId")
+    @JsonProperty("img")
     @Column(columnDefinition = "longblob")
     private byte[] img;
+
+    // Multiple Products can have same categories
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

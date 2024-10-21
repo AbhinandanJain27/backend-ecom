@@ -21,7 +21,7 @@ public class Orders {
 
     private Date date;
 
-    private double amount;
+    private double amountPaid;
 
     private double totalAmount;
 
@@ -37,9 +37,10 @@ public class Orders {
     @JoinColumn(name="user_email", referencedColumnName = "email")
     private User user;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<CartItem> cartItems;
-//
+
+    //
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name="product_id",nullable = false)
 //    @OnDelete(action = OnDeleteAction.CASCADE)
