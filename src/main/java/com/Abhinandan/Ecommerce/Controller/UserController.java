@@ -6,7 +6,6 @@ import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Enum.UserRole;
 import com.Abhinandan.Ecommerce.Service.UserService;
 import com.Abhinandan.Ecommerce.Utils.JwtUtility;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +61,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
             }
             User user = optionalUser.get();
-            String hashedPassword = "";
+            String hashedPassword;
             String token = jwtUtility.generateToken(new HashMap<>(),user);
             try {
                 hashedPassword = toHexString(getSHA(password));
@@ -151,7 +150,7 @@ public class UserController {
 
     public static String toHexString(byte[] hash)
     {
-        // Convert byte array into signum representation
+        // Convert byte array into sign num representation
         BigInteger number = new BigInteger(1, hash);
 
         // Convert message digest into hex value

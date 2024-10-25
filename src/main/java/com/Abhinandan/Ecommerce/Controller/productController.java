@@ -1,7 +1,7 @@
 package com.Abhinandan.Ecommerce.Controller;
 
 import com.Abhinandan.Ecommerce.Dto.productDto;
-import com.Abhinandan.Ecommerce.Service.IMPL.productServiceImpl;
+import com.Abhinandan.Ecommerce.Service.productService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.List;
 public class productController {
 
     @Autowired
-    private productServiceImpl productService;
+    private productService productService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addProduct")

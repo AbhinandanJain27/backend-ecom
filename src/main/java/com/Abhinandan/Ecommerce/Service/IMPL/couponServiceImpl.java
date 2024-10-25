@@ -41,6 +41,7 @@ public class couponServiceImpl implements couponService {
         return false;
     }
 
+    @Override
     public Optional<Coupons> updateCoupon(String name) {
         return couponRepository.findById(name).map(coupons -> {
             if(coupons.getStatus().equals(couponStatus.ACTIVE)){

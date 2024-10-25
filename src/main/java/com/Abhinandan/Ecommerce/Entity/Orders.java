@@ -31,8 +31,6 @@ public class Orders {
 
     private UUID trackingId;
 
-    private String email;
-
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_email", referencedColumnName = "email")
     private User user;

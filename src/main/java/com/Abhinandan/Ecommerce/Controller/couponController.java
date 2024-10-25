@@ -3,7 +3,7 @@ package com.Abhinandan.Ecommerce.Controller;
 import com.Abhinandan.Ecommerce.Entity.Coupons;
 import com.Abhinandan.Ecommerce.Enum.couponStatus;
 import com.Abhinandan.Ecommerce.Enum.discountType;
-import com.Abhinandan.Ecommerce.Service.IMPL.couponServiceImpl;
+import com.Abhinandan.Ecommerce.Service.couponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.*;
 public class couponController {
 
     @Autowired
-    private couponServiceImpl couponService;
+    private couponService couponService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addCoupon")

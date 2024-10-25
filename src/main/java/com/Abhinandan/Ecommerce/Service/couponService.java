@@ -10,4 +10,5 @@ public interface couponService {
     List<Coupons> getAllCoupons();
     Optional<Coupons> getCoupon(String name);
     boolean deleteCoupon(String name);
+    Optional<Coupons> updateCoupon(String name);
 }

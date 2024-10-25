@@ -20,6 +20,8 @@ public class Product {
     private String productName;
     @JsonProperty("price")
     private double price;
+    @JsonProperty("quantity")
+    private long quantity;
     @Lob
     @JsonProperty("description")
     private String Description;
@@ -40,6 +42,7 @@ public class Product {
         productDto.setProductId(productId);
         productDto.setProductName(productName);
         productDto.setPrice(price);
+        productDto.setQuantity(quantity);
         productDto.setDescription(Description);
         productDto.setByteImg(img);
         productDto.setCategoryId(category.getCategoryId());
