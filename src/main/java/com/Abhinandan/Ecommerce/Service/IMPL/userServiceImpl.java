@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Service.IMPL;
 
+import com.Abhinandan.Ecommerce.Dto.changePasswordDto;
 import com.Abhinandan.Ecommerce.Dto.profileDto;
 import com.Abhinandan.Ecommerce.Entity.Orders;
 import com.Abhinandan.Ecommerce.Entity.User;
@@ -28,14 +29,13 @@ public class userServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-
+        User createdUser = userRepository.save(user);
         Orders order = new Orders();
-        order.setUser(user);
-        order.setOrderStatus(orderStatus.PENDING);
+            order.setUser(user);
+            order.setOrderStatus(orderStatus.PENDING);
 //        order.setTrackingId(generator.trackingId(user.getEmail()));
-        orderRepository.save(order);
-
-        return userRepository.save(user);
+            orderRepository.save(order);
+        return createdUser;
     }
 
     @Override
@@ -86,7 +86,8 @@ public class userServiceImpl implements UserService {
         return userRepository.save(user).getDto();
     }
 
-    public boolean changePassword(){
+    public boolean changePassword(User user){
+        userRepository.save(user);
         return true;
     }
 

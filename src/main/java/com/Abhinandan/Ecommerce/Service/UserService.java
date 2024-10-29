@@ -14,4 +14,5 @@ public interface UserService {
     boolean deleteUser(String email);
     Optional<User> updateAccountStatus(String email, User userDetails);
     profileDto updateUserProfile(String email, profileDto profile) throws IOException;
+    boolean changePassword(User user);
 }

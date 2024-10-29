@@ -13,6 +13,6 @@ public interface orderRepository extends JpaRepository<Orders, Long> {
 
     Orders findByTrackingId(UUID trackingID);
 
-    Orders findByUserIdAndStatus(Long userId, orderStatus orderStatus);
+//    Orders findByEmailAndStatus(String email, orderStatus orderStatus);
 
 }

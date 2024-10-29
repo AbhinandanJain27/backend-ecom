@@ -23,9 +23,9 @@ public class cartServiceImpl implements cartService {
     @Autowired
     private cartItemsRepository cartItemsRepository;
 
-    public ResponseEntity<?> addProductToCart(addProductInCartDto addProductInCart){
-        Orders activeOrder = orderRepository.findByUserIdAndStatus(addProductInCart.getOrderId(), orderStatus.PENDING);
-        Optional < CartItem > cartItems = cartItemsRepository.findProductIdAndOrderIdAndUserid(addProductInCart.getProductId(), activeOrder.getOrderId(), addProductInCart.getOrderId());
-
-    }
+//    public ResponseEntity<?> addProductToCart(addProductInCartDto addProductInCart){
+//        Orders activeOrder = orderRepository.findByUserIdAndStatus(addProductInCart.getOrderId(), orderStatus.PENDING);
+//        Optional < CartItem > cartItems = cartItemsRepository.findProductIdAndOrderIdAndUserid(addProductInCart.getProductId(), activeOrder.getOrderId(), addProductInCart.getOrderId());
+//
+//    }
 }

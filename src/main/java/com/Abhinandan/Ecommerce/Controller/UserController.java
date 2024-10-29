@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Controller;
 
+import com.Abhinandan.Ecommerce.Dto.changePasswordDto;
 import com.Abhinandan.Ecommerce.Dto.profileDto;
 import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/user")
@@ -45,7 +47,7 @@ public class UserController {
         }
         return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
     }
-
+    // I have to create a URL For Forgot Password and Before that I Have to add Security Question and set Security Question answerAt the time of registering and Use that For forgot Password Section And if the question and answer matches then we have to provide a page where the user can enter a new password and that will be saved in the databse for future usage
     // Api For User Login
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> authenticateUser(@RequestBody Map<String, String> credentials) {
@@ -138,6 +140,34 @@ public class UserController {
     public ResponseEntity<profileDto> updateUserProfile(@PathVariable String email, @ModelAttribute profileDto profile) throws IOException {
         profileDto updatedUser = userService.updateUserProfile(email, profile);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+    // Use Token For extracting email remove it from the api endpoint and use it for the same.
+    @PutMapping("/changePassword/{email}")
+    public ResponseEntity<?> changePassword(@PathVariable String email, @RequestBody changePasswordDto changePassword){
+        Optional <User> retrievedUser = userService.findByEmail(email);
+        boolean passwordUpdated = false;
+        if(retrievedUser.isPresent()){
+            User user = retrievedUser.get();
+            try{
+                String hashedOldPassword = toHexString(getSHA(changePassword.getOldPassword()));
+                if(hashedOldPassword.equals(user.getPassword())){
+                    String hashedNewPassword = toHexString(getSHA(changePassword.getNewPassword()));
+                    user.setPassword(hashedNewPassword);
+                    passwordUpdated = userService.changePassword(user);
+                }else{
+//                    return ResponseEntity.badRequest();
+                    return (ResponseEntity<?>) ResponseEntity.badRequest().body("Enter The Correct Password ");
+                }
+
+            }catch (NoSuchAlgorithmException e1){
+                System.out.println("No Such Algorithm Exists");
+            }
+
+        }
+        if(passwordUpdated){
+            return ResponseEntity.accepted().body("Password Updated Successfully");
+        }
+        return ResponseEntity.notFound().build();
     }
 
     public static byte[] getSHA(String input) throws NoSuchAlgorithmException
