@@ -7,8 +7,8 @@ public class addProductInCartDto {
 
     private Long orderId;
 
-    private long productId;
+    private String email;
 
-    private int quantity;
+    private long productId;
 
 }
