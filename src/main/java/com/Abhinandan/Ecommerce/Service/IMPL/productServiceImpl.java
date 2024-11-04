@@ -24,7 +24,7 @@ public class productServiceImpl implements productService {
     @Override
     public productDto addProduct(productDto productDto) throws IOException {
         Product product = new Product();
-        product.setProductName(productDto.getProductName());
+        product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setImg(productDto.getImg().getBytes());
@@ -42,7 +42,7 @@ public class productServiceImpl implements productService {
 
     @Override
     public List<productDto> getAllProductsByName(String title){
-        List<Product> products = productRepository.findAllByProductNameContaining(title);
+        List<Product> products = productRepository.findAllByNameContaining(title);
         return products.stream().map(Product::getDto).collect(Collectors.toList());
     }
 

@@ -6,8 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class productDto {
 
-    private Long productId;
-    private String productName;
+    private Long id;
+    private String name;
     private Double price;
     private long quantity;
     private String description;
@@ -15,4 +15,7 @@ public class productDto {
     private Long categoryId;
     private String categoryName;
     private MultipartFile img;
+
+    public void setId(long id) {
+    }
 }

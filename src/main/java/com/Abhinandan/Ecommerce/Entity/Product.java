@@ -14,17 +14,22 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("productId")
-    private long productId;
-    @JsonProperty("productName")
-    private String productName;
+    @JsonProperty("id")
+    private long id;
+
+    @JsonProperty("name")
+    private String name;
+
     @JsonProperty("price")
     private double price;
+
     @JsonProperty("quantity")
     private long quantity;
+
     @Lob
     @JsonProperty("description")
     private String Description;
+
     @Lob
     @JsonProperty("img")
     @Column(columnDefinition = "longblob")
@@ -39,8 +44,8 @@ public class Product {
 
     public productDto getDto() {
         productDto productDto = new productDto();
-        productDto.setProductId(productId);
-        productDto.setProductName(productName);
+        productDto.setId(id);
+        productDto.setName(name);
         productDto.setPrice(price);
         productDto.setQuantity(quantity);
         productDto.setDescription(Description);
