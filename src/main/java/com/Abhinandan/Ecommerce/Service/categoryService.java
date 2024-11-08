@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface categoryService {
     category saveCategory(category category);
     List<category> getAllCategories();
-    Optional<category> findById(Long id);
-    boolean deleteUser(Long id);
+    Optional<category> findById(long id);
+    boolean deleteCategory(long id);
 }

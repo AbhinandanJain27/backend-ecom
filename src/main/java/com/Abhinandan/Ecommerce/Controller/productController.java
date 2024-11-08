@@ -23,6 +23,7 @@ public class productController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addProduct")
     public ResponseEntity<productDto> addProduct(@ModelAttribute productDto productDto) throws IOException{
+        System.out.println(productDto);
         productDto productDto1 = this.productService.addProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDto1);
     }

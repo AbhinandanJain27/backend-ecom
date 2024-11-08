@@ -23,6 +23,7 @@ public class productServiceImpl implements productService {
 
     @Override
     public productDto addProduct(productDto productDto) throws IOException {
+        System.out.println(productDto);
         Product product = new Product();
         product.setProductName(productDto.getProductName());
         product.setDescription(productDto.getDescription());

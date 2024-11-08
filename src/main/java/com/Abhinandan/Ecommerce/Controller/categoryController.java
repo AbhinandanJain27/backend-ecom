@@ -30,18 +30,14 @@ public class categoryController {
     public ResponseEntity<category> getById(@PathVariable long id){
         Optional<category> optionalCategory = categoryService.findById(id);
         return optionalCategory
-                .map(category -> {
-                    category categoryDto = new category();
-                    categoryDto.setName(category.getName());
-                    return ResponseEntity.ok(categoryDto);
-                })
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long id){
-        boolean deleted= categoryService.deleteUser(id);
+    public ResponseEntity<Void> deleteCategory(@PathVariable long id){
+        boolean deleted= categoryService.deleteCategory(id);
         if (deleted) {
             return ResponseEntity.noContent().build(); // Return 204 No Content
         } else {

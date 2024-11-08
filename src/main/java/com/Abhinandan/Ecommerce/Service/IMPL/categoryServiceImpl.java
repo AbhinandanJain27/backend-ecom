@@ -21,11 +21,11 @@ public class categoryServiceImpl implements categoryService {
         return categoryRepository.findAll();
     }
     @Override
-    public Optional<category> findById(Long id){
+    public Optional<category> findById(long id){
         return categoryRepository.findById(id);
     }
     @Override
-    public boolean deleteUser(Long id){
+    public boolean deleteCategory(long id){
         Optional <category> category = findById(id);
         if(category.isPresent()){
             categoryRepository.delete(category.get());

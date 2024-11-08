@@ -13,7 +13,6 @@ public interface orderRepository extends JpaRepository<Orders, Long> {
 
     Orders findByTrackingId(UUID trackingID);
 
-    Orders findByOrderIdAndOrderStatus(Long orderId, orderStatus orderStatus);
-
+    // For Retrieving Pending Orders for a given User
     Orders findByUserEmailAndOrderStatus(String email, orderStatus orderStatus);
 }

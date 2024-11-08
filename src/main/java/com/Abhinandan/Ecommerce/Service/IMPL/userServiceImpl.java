@@ -32,6 +32,8 @@ public class userServiceImpl implements UserService {
         User createdUser = userRepository.save(user);
         Orders order = new Orders();
             order.setUser(user);
+            order.setAmountPaid(0L);
+            order.setTotalAmount(0L);
             order.setOrderStatus(orderStatus.PENDING);
 //        order.setTrackingId(generator.trackingId(user.getEmail()));
             orderRepository.save(order);
