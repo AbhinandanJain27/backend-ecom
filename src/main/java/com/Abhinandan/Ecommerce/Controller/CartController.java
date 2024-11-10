@@ -24,4 +24,9 @@ public class CartController {
         orderDto orderDto = cartService.getCartById(email);
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
+
+    @DeleteMapping("/removeFromCart")
+    public ResponseEntity<?> removeProductFromCArt(@RequestBody addProductInCartDto product){
+        return cartService.removeProductFromCart(product);
+    }
 }

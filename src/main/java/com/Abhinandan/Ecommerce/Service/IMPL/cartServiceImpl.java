@@ -16,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,9 +39,11 @@ public class cartServiceImpl implements cartService {
     @Transactional
     public ResponseEntity<?> addProductToCart(addProductInCartDto addProductInCart) {
         // Find the active order for the user
+        Map<String, String> response = new HashMap<>();
         Orders activeOrder = orderRepository.findByUserEmailAndOrderStatus(addProductInCart.getEmail(), orderStatus.PENDING);
         if (activeOrder == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Active order not found for user");
+            response.put("message","No Active Order's Found For User");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
         // Check if the CartItem already exists
@@ -52,7 +56,8 @@ public class cartServiceImpl implements cartService {
             activeOrder.setTotalAmount(activeOrder.getTotalAmount() + existingCartItem.getPrice());
             cartItemsRepository.save(existingCartItem);
             orderRepository.save(activeOrder);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Product already in cart, cart values updated!");
+            response.put("message","Products Already In Cart");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } else {
             // Fetch the Product and User entities
             Optional<Product> optionalProduct = productRepository.findById(addProductInCart.getProductId());
@@ -75,12 +80,21 @@ public class cartServiceImpl implements cartService {
                 activeOrder.setTotalAmount(activeOrder.getTotalAmount() + updatedCart.getPrice());
                 activeOrder.getCartItems().add(updatedCart);
                 orderRepository.save(activeOrder);
-
-                return ResponseEntity.status(HttpStatus.CREATED).body("Product Added To Cart"+updatedCart);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or Product not found");
+                response.put("message","Product Added to cart");
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            } else if(optionalUser.isPresent()){
+                response.put("message","Product Not Found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }else{
+                response.put("message","User Not Found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
         }
+    }
+
+    @Override
+    public ResponseEntity<?> removeProductFromCart(addProductInCartDto addProductInCart) {
+        return null;
     }
 
     @Override
@@ -97,4 +111,6 @@ public class cartServiceImpl implements cartService {
         orderDto.setCartItems(cartItemsDtoList);
         return orderDto;
     }
+
+
 }
