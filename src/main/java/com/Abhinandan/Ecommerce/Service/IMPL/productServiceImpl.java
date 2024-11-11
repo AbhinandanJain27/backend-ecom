@@ -23,12 +23,12 @@ public class productServiceImpl implements productService {
 
     @Override
     public productDto addProduct(productDto productDto) throws IOException {
-        System.out.println(productDto);
         Product product = new Product();
         product.setProductName(productDto.getProductName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setImg(productDto.getImg().getBytes());
+        product.setQuantity(productDto.getQuantity());
         category category = categoryRepository.findById(productDto.getCategoryId()).orElseThrow();
         product.setCategory(category);
 

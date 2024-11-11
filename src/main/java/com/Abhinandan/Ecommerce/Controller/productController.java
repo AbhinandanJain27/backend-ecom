@@ -25,7 +25,11 @@ public class productController {
     public ResponseEntity<productDto> addProduct(@ModelAttribute productDto productDto) throws IOException{
         System.out.println(productDto);
         productDto productDto1 = this.productService.addProduct(productDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDto1);
+        if(productDto1 != null){
+            return ResponseEntity.status(HttpStatus.CREATED).body(productDto1);
+        }else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
     }
 
     @GetMapping("/products")

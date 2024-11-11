@@ -114,7 +114,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Delete a user or account closure
+    // Delete a user or account closure --> Delete cartItems, Orders and all related to that account from database before deleting the user
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {

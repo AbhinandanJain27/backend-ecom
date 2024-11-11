@@ -27,6 +27,13 @@ public class couponServiceImpl implements couponService {
     }
 
     @Override
+    public List<Coupons> getAllActiveCoupons() {
+        return couponRepository.findAllByStatus(couponStatus.ACTIVE);
+    }
+
+
+
+    @Override
     public Optional<Coupons> getCoupon(String name) {
         return couponRepository.findById(name);
     }

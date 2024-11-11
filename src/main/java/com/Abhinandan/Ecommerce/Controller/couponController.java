@@ -29,9 +29,15 @@ public class couponController {
        return new ResponseEntity<Coupons>(couponService.addCoupon(coupon), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAllCoupons")
-    public List<Coupons> getAllUsers(){
+    public List<Coupons> getAllCoupons(){
         return couponService.getAllCoupons();
+    }
+
+    @GetMapping("/getAllActiveCoupons")
+    public List<Coupons> getAllActiveCoupons(){
+        return couponService.getAllActiveCoupons();
     }
 
     @GetMapping("/{name}")
