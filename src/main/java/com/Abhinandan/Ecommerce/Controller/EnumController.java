@@ -21,4 +21,16 @@ public class EnumController {
     public orderStatus[] orderStatuses(){
         return orderStatus.values();
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/discountTypes")
+    public discountType[] discountTypes () {
+        return discountType.values();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/couponExpirationType")
+    public expirationType[]  expirationTypes() {
+        return expirationType.values();
+    }
 }

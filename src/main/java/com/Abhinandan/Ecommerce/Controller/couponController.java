@@ -23,6 +23,7 @@ public class couponController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addCoupon")
     public ResponseEntity<Coupons> addCoupon(@RequestBody Coupons coupon) {
+        System.out.println(coupon);
         if(coupon.getCouponId() == null || coupon.getCouponId().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -54,15 +55,15 @@ public class couponController {
                     }else{
                         couponDto.setDiscountValue(coupon.getDiscountValue());
                     }
-                    Date today = new Date();
-                    boolean expired = today.after(coupon.getExpirationDate()) || coupon.getExpirationTotalUsage()<1 ;
-                    if(expired){
-                        couponDto.setStatus(couponStatus.EXPIRED);
-                    }else{
-                        couponDto.setStatus(couponStatus.ACTIVE);
-                        couponDto.setExpirationDate(coupon.getExpirationDate());
-                        couponDto.setExpirationTotalUsage(coupon.getExpirationTotalUsage());
-                    }
+//                    Date today = new Date();
+//                    boolean expired = today.after(coupon.getExpirationDate()) || coupon.getExpirationTotalUsage()<1 ;
+//                    if(expired){
+//                        couponDto.setStatus(couponStatus.EXPIRED);
+//                    }else{
+//                        couponDto.setStatus(couponStatus.ACTIVE);
+//                        couponDto.setExpirationDate(coupon.getExpirationDate());
+//                        couponDto.setExpirationTotalUsage(coupon.getExpirationTotalUsage());
+//                    }
                     return ResponseEntity.ok(couponDto);
                 })
                 .orElse(ResponseEntity.notFound().build());

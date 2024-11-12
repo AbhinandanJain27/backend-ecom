@@ -35,6 +35,7 @@ public class Coupons {
 
     private Date expirationDate;
 
-    private int expirationTotalUsage;
+    private int maximumAllowedUsages;
 
+    private int currentUsages;
 }
