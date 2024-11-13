@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.List;
@@ -36,11 +38,14 @@ public class Orders {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_email", referencedColumnName = "email")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<CartItem> cartItems;
 
 }

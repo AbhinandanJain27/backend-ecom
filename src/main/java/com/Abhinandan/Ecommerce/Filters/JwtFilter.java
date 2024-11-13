@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Filters;
 
+import com.Abhinandan.Ecommerce.Utils.EmailContext;
 import com.Abhinandan.Ecommerce.Utils.JwtUtility;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -46,6 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
                         );
                         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        EmailContext.setEmail(email);
                     }
                 } catch (IllegalArgumentException e) {
                     logger.info("Illegal Argument while fetching the username !!"+e);
@@ -57,7 +59,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                // This try block is for clearing Material in Local Storage To prevent Leakage
+                try{
                     filterChain.doFilter(request, response);
+                }finally {
+                    EmailContext.clear();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
