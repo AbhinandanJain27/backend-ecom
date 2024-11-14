@@ -1,7 +1,6 @@
 package com.Abhinandan.Ecommerce.Controller;
 
 import com.Abhinandan.Ecommerce.Entity.Coupons;
-import com.Abhinandan.Ecommerce.Enum.couponStatus;
 import com.Abhinandan.Ecommerce.Enum.discountType;
 import com.Abhinandan.Ecommerce.Service.couponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +54,6 @@ public class couponController {
                     }else{
                         couponDto.setDiscountValue(coupon.getDiscountValue());
                     }
-//                    Date today = new Date();
-//                    boolean expired = today.after(coupon.getExpirationDate()) || coupon.getExpirationTotalUsage()<1 ;
-//                    if(expired){
-//                        couponDto.setStatus(couponStatus.EXPIRED);
-//                    }else{
-//                        couponDto.setStatus(couponStatus.ACTIVE);
-//                        couponDto.setExpirationDate(coupon.getExpirationDate());
-//                        couponDto.setExpirationTotalUsage(coupon.getExpirationTotalUsage());
-//                    }
                     return ResponseEntity.ok(couponDto);
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -84,7 +74,7 @@ public class couponController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{email}")
     public ResponseEntity<Coupons> updateCouponStatus(@PathVariable String email, Coupons coupon) {
-        Optional<Coupons> updatedCoupon = couponService.updateCoupon(email);
+        Optional<Coupons> updatedCoupon = couponService.updateCouponStatus(email);
 
         return updatedCoupon.map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());

@@ -27,5 +27,7 @@ public class orderDto {
 
     private String email;
 
+    private String coupon;
+
     private List<cartItemsDto> cartItems;
 }

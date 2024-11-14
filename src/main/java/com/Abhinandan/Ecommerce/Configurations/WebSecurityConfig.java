@@ -55,6 +55,7 @@ public class WebSecurityConfig{
                         .requestMatchers("/user/login", "/user/register").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@ToString(exclude = {"user", "cartItems"})
+@ToString(exclude = {"user", "cartItems","coupon"})
 @Table(name="orders")
 public class Orders {
     @Id
@@ -41,6 +41,11 @@ public class Orders {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="couponCode", referencedColumnName = "couponId")
+    @JsonIgnore
+    private Coupons coupon;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 //    @JsonManagedReference

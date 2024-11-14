@@ -2,6 +2,8 @@ package com.Abhinandan.Ecommerce.Service.IMPL;
 
 import com.Abhinandan.Ecommerce.Entity.Address;
 import com.Abhinandan.Ecommerce.Entity.User;
+import com.Abhinandan.Ecommerce.Exceptions.AddressNotFoundException;
+import com.Abhinandan.Ecommerce.Exceptions.UnauthorizedAccessException;
 import com.Abhinandan.Ecommerce.Repository.AddressRepository;
 import com.Abhinandan.Ecommerce.Repository.UserRepository;
 import com.Abhinandan.Ecommerce.Service.AddressService;
@@ -42,7 +44,7 @@ public class AddressServiceImpl implements AddressService {
         if(retrievedAddress.isPresent()){
             Address address = retrievedAddress.get();
             if (!address.getUser().getEmail().equals(email)) {
-                throw new RuntimeException("Unauthorized update attempt");
+                throw new UnauthorizedAccessException();
             }
             // Update only non-null fields
             if (addressDetails.getHouseNumber() != null) {
@@ -69,7 +71,7 @@ public class AddressServiceImpl implements AddressService {
 
             return addressRepository.save(address);
         }else{
-            throw new RuntimeException("Address Not Found");
+            throw new AddressNotFoundException();
         }
     }
 

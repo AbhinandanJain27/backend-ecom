@@ -1,7 +1,8 @@
 package com.Abhinandan.Ecommerce.Service;
 
+import com.Abhinandan.Ecommerce.Dto.applyCouponDto;
 import com.Abhinandan.Ecommerce.Entity.Coupons;
-import com.Abhinandan.Ecommerce.Enum.couponStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,5 +13,7 @@ public interface couponService {
     List<Coupons> getAllActiveCoupons();
     Optional<Coupons> getCoupon(String name);
     boolean deleteCoupon(String name);
-    Optional<Coupons> updateCoupon(String name);
+    Optional<Coupons> updateCouponStatus(String name);
+    ResponseEntity<?> applyCoupon(applyCouponDto coupon);
+
 }

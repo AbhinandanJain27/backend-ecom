@@ -6,6 +6,7 @@ import com.Abhinandan.Ecommerce.Entity.User;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Enum.UserRole;
 import com.Abhinandan.Ecommerce.Service.UserService;
+import com.Abhinandan.Ecommerce.Utils.EmailContext;
 import com.Abhinandan.Ecommerce.Utils.JwtUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,9 +100,9 @@ public class UserController {
 
     // Used for checks and getting data for profile section
 //    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/{email}")
-    public ResponseEntity<User> getByEmail(@PathVariable String email){
-        Optional<User> optionalUser = userService.findByEmail(email); // Assuming findByEmail exists
+    @GetMapping("")
+    public ResponseEntity<User> getByEmail(){
+        Optional<User> optionalUser = userService.findByEmail(EmailContext.getEmail()); // Assuming findByEmail exists
         return optionalUser
                 .map(user -> {
                     User userDto = new User();
@@ -116,9 +117,9 @@ public class UserController {
 
     // Delete a user or account closure --> Delete cartItems, Orders and all related to that account from database before deleting the user
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String email) {
-        boolean deleted = userService.deleteUser(email);
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteUser() {
+        boolean deleted = userService.deleteUser(EmailContext.getEmail());
         if (deleted) {
             return ResponseEntity.noContent().build(); // Return 204 No Content
         } else {
@@ -128,23 +129,23 @@ public class UserController {
 
     // Updating account status
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/modifyAccountStatus/{email}")
-    public ResponseEntity<User> updateAccountStatus(@PathVariable String email, @RequestBody User userDetails) {
-        Optional<User> updatedUser = userService.updateAccountStatus(email, userDetails);
+    @PutMapping("/modifyAccountStatus")
+    public ResponseEntity<User> updateAccountStatus( @RequestBody User userDetails) {
+        Optional<User> updatedUser = userService.updateAccountStatus(EmailContext.getEmail(), userDetails);
         return updatedUser.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
-    @PutMapping("/updateUserProfile/{email}")
-    public ResponseEntity<profileDto> updateUserProfile(@PathVariable String email, @ModelAttribute profileDto profile) throws IOException {
-        profileDto updatedUser = userService.updateUserProfile(email, profile);
+    @PutMapping("/updateUserProfile")
+    public ResponseEntity<profileDto> updateUserProfile(@ModelAttribute profileDto profile) throws IOException {
+        profileDto updatedUser = userService.updateUserProfile(EmailContext.getEmail(), profile);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
     // Use Token For extracting email remove it from the api endpoint and use it for the same.
-    @PutMapping("/changePassword/{email}")
-    public ResponseEntity<?> changePassword(@PathVariable String email, @RequestBody changePasswordDto changePassword){
-        Optional <User> retrievedUser = userService.findByEmail(email);
+    @PutMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody changePasswordDto changePassword){
+        Optional <User> retrievedUser = userService.findByEmail(EmailContext.getEmail());
         boolean passwordUpdated = false;
         if(retrievedUser.isPresent()){
             User user = retrievedUser.get();
