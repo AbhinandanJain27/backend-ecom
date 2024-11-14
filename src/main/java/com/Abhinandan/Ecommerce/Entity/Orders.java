@@ -33,6 +33,7 @@ public class Orders {
 
     private String address;
 
+//    @Enumerated(EnumType.STRING)
     private orderStatus orderStatus;
 
     private UUID trackingId;

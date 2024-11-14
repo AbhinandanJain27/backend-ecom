@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Entity;
 
+import com.Abhinandan.Ecommerce.Enum.AddressType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,6 +30,9 @@ public class Address {
     private String country;
 
     private int pinCode;
+
+    @Enumerated(EnumType.STRING)
+    private AddressType addressType;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name="user_email",nullable = false)

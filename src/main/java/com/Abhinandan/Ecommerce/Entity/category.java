@@ -13,10 +13,14 @@
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @JsonProperty("id")
         private long CategoryId;
+
+//        @Enumerated(EnumType.STRING)
         @JsonProperty("type")
         private CategoryType type;
+
         @JsonProperty("name")
         private String name;
+
         @Lob
         @JsonProperty("description")
         private String description;

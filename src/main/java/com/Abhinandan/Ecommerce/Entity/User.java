@@ -4,10 +4,7 @@ import com.Abhinandan.Ecommerce.Dto.profileDto;
 import com.Abhinandan.Ecommerce.Enum.AccountStatus;
 import com.Abhinandan.Ecommerce.Enum.UserRole;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,23 +16,33 @@ import java.util.List;
 @Data
 @Table (name = "users")
 public class User implements UserDetails {
+
     @jakarta.persistence.Id
     @JsonProperty("email")
     private String email;
+
     @JsonProperty("name")
     private String Name;
+
     @JsonProperty("mobileNumber")
     private long mobileNumber;
+
     @JsonProperty("password")
     private String password;
+
+//    @Enumerated(EnumType.STRING)
     @JsonProperty("role")
     private UserRole role;
+
+//    @Enumerated(EnumType.STRING)
     @JsonProperty("accountStatus")
     private AccountStatus accountStatus;
+
     @Lob
     @JsonProperty("img")
     @Column(columnDefinition = "longblob")
     private byte[] img;
+
     public User(){}
 
     // Address Class will be added in the end when required in this class as well as the required DTO's
