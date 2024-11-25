@@ -109,17 +109,19 @@ public class couponServiceImpl implements couponService {
         });
     }
 
-    private boolean isCouponExpired(String coupon){
+    public boolean isCouponExpired(String coupon){
         Optional <Coupons> retrievedCoupon = couponRepository.findById(coupon);
         if(retrievedCoupon.isPresent()){
             if((retrievedCoupon.get().getStatus()).equals(couponStatus.EXPIRED)){
                 return true;
             }else{
+
                 if(retrievedCoupon.get().getExpirationType()== expirationType.ALLOWED_USAGE){
+
                     return !(retrievedCoupon.get().getMaximumAllowedUsages() > retrievedCoupon.get().getCurrentUsages());
                 }else{
                     Date today = new Date();
-                    return !(today.after(retrievedCoupon.get().getExpirationDate())) ;
+                    return (today.after(retrievedCoupon.get().getExpirationDate())) ;
                 }
             }
         }

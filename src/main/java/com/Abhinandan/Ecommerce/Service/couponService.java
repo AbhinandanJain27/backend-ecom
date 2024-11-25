@@ -15,5 +15,5 @@ public interface couponService {
     boolean deleteCoupon(String name);
     Optional<Coupons> updateCouponStatus(String name);
     ResponseEntity<?> applyCoupon(applyCouponDto coupon);
-
+    boolean isCouponExpired(String coupon);
 }

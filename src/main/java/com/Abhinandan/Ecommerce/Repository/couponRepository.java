@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface couponRepository extends JpaRepository<Coupons,String> {
+
     List<Coupons> findAllByStatus(couponStatus status);
+
 }

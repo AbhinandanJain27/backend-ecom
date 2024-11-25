@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Filters;
 
+import com.Abhinandan.Ecommerce.Exceptions.SessionExpiredException;
 import com.Abhinandan.Ecommerce.Utils.EmailContext;
 import com.Abhinandan.Ecommerce.Utils.JwtUtility;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -52,8 +53,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 } catch (IllegalArgumentException e) {
                     logger.info("Illegal Argument while fetching the username !!"+e);
                 } catch (ExpiredJwtException e) {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     logger.info("Given jwt token is expired !!");
+                    throw new SessionExpiredException();
                 } catch (MalformedJwtException e) {
                     logger.info("Some changes has done in token !! Invalid Token");
                 } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.Abhinandan.Ecommerce.Entity;
 
+import com.Abhinandan.Ecommerce.Dto.orderDto;
 import com.Abhinandan.Ecommerce.Enum.orderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -48,9 +49,24 @@ public class Orders {
     private Coupons coupon;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-//    @JsonManagedReference
+    @JsonManagedReference
     @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<CartItem> cartItems;
 
+    public orderDto getOrderDto(){
+        orderDto orderDto = new orderDto();
+
+        orderDto.setOrderId(orderId);
+        orderDto.setDate(date);
+        orderDto.setAmountPaid(amountPaid);
+        orderDto.setDiscount(discount);
+        orderDto.setAddress(address);
+        orderDto.setOrderStatus(orderStatus);
+        orderDto.setTrackingId(trackingId);
+        if(coupon != null){
+            orderDto.setCoupon(coupon.getCouponId());
+        }
+        return orderDto;
+    }
 }
