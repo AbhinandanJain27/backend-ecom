@@ -54,7 +54,8 @@ public class JwtFilter extends OncePerRequestFilter {
                     logger.info("Illegal Argument while fetching the username !!"+e);
                 } catch (ExpiredJwtException e) {
                     logger.info("Given jwt token is expired !!");
-                    throw new SessionExpiredException();
+                    handleJwtException(response, e);
+//                    throw new SessionExpiredException();
                 } catch (MalformedJwtException e) {
                     logger.info("Some changes has done in token !! Invalid Token");
                 } catch (Exception e) {
@@ -86,5 +87,10 @@ public class JwtFilter extends OncePerRequestFilter {
             throw new IllegalArgumentException("Token Can't be Empty.");
         }
         return jwtUtility.getUsernameFromToken(token);
+    }
+
+    private void handleJwtException(HttpServletResponse response, ExpiredJwtException e) throws IOException {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403 Forbidden
+        response.getWriter().write("JWT Token has expired.");
     }
 }

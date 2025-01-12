@@ -5,9 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     public ResponseEntity<?> handleUnauthorizedAccessException(UnauthorizedAccessException ex){
@@ -18,8 +19,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("Address Not Found" + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(SessionExpiredException.class)
 //    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(SessionExpiredException.class)
     public ResponseEntity<?> handleSessionExpiredException(SessionExpiredException ex){
         return new ResponseEntity<>("Please Login Again" + ex.getMessage(), HttpStatus.FORBIDDEN);
     }

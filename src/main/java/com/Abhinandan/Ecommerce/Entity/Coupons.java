@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="Coupons")
-public class Coupons {
+public class    Coupons {
     @Id
     private String CouponId;
 

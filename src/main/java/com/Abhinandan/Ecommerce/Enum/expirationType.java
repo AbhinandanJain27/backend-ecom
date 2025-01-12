@@ -1,6 +1,6 @@
 package com.Abhinandan.Ecommerce.Enum;
 
 public enum expirationType {
-    DATE,
-    ALLOWED_USAGE
+    DATE_BASED,
+    USAGE_BASED
 }

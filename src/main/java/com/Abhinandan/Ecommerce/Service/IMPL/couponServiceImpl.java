@@ -116,7 +116,7 @@ public class couponServiceImpl implements couponService {
                 return true;
             }else{
 
-                if(retrievedCoupon.get().getExpirationType()== expirationType.ALLOWED_USAGE){
+                if(retrievedCoupon.get().getExpirationType()== expirationType.USAGE_BASED){
 
                     return !(retrievedCoupon.get().getMaximumAllowedUsages() > retrievedCoupon.get().getCurrentUsages());
                 }else{
