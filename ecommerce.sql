@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `address`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `address` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `address_type` enum('PRIMARY','SECONDARY') DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
   `house_number` varchar(255) DEFAULT NULL,
@@ -35,7 +36,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`id`),
   KEY `FKr5djoo5bg4xaatcw9s37thv4c` (`user_email`),
   CONSTRAINT `FKr5djoo5bg4xaatcw9s37thv4c` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,6 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'Bhilwara','India','3-B-12',311001,'Rajasthan','New Housing Board','Shastri Nagar','admin@test.com'),(2,'Bhilwara','India','5-D-56',311001,'Rajasthan','New Housing Board','Shastri Nagar','admin@test.com'),(3,'Bhilwara','India','5-D-56',311001,'Rajasthan','New Housing Board','Shastri Nagar','user@test.com'),(4,'Bhilwara','India','6-D-56',311001,'Rajasthan','New Housing Board','Shastri Nagar','user@test.com');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,8 +68,8 @@ CREATE TABLE `cart_items` (
   KEY `FK30lch3nmoxkhrqcw96owu34oj` (`user_email`),
   CONSTRAINT `FK1re40cjegsfvw58xrkdp6bac6` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
   CONSTRAINT `FK30lch3nmoxkhrqcw96owu34oj` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE,
-  CONSTRAINT `FKiuhn9mru62vgqy1h0t1ggc3s7` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `FKiuhn9mru62vgqy1h0t1ggc3s7` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +78,6 @@ CREATE TABLE `cart_items` (
 
 LOCK TABLES `cart_items` WRITE;
 /*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (1,299,1,1,2,'random@user.com'),(2,89999,1,1,7,'random@user.com'),(3,49000,1,1,9,'random@user.com'),(4,79999,1,1,10,'random@user.com'),(5,299,8,2,2,'user@test.com'),(6,999,2,2,3,'user@test.com'),(7,89999,1,2,7,'user@test.com'),(8,799,1,2,17,'user@test.com');
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +95,7 @@ CREATE TABLE `category` (
   `type` tinyint DEFAULT NULL,
   PRIMARY KEY (`category_id`),
   CONSTRAINT `category_chk_1` CHECK ((`type` between 0 and 6))
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +104,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'shirts','Shirts',0),(3,'jumpsuits','Jumpsuits',0),(4,'Mobiles','Mobile phones',1),(5,'Laptops','Laptops',1),(6,'Body Lotion','Lotion\'s',2),(7,'Toys','Toys',3),(8,'Soft Drinks','Soft Drinks',4),(9,'Paintings','Wall Paintings',5),(10,'All Accessories Inclusive','Badminton ',6),(11,'BackPack','BackPack',0),(12,'Jewellery','Jewellery',0),(14,'Monitor, Hard Drives, Lan Cables, Pen Drives, Chargers, Cooling pad, Mouse, Keyboard','Computer Accessories',1),(15,'Smart Watches','Smart Watches',1);
+INSERT INTO `category` VALUES (1,'shirts','Shirts',0),(3,'jumpsuits','Jumpsuits',0),(4,'Mobiles','Mobile phones',1),(5,'Laptops','Laptops',1),(6,'Body Lotion','Lotion\'s',2),(7,'Toys','Toys',3),(8,'Soft Drinks','Soft Drinks',4),(9,'Paintings','Wall Paintings',5),(10,'All Accessories Inclusive','Badminton ',6),(11,'BackPack','BackPack',0),(12,'Jewellery','Jewellery',0),(14,'Monitor, Hard Drives, Lan Cables, Pen Drives, Chargers, Cooling pad, Mouse, Keyboard','Computer Accessories',1),(15,'Smart Watches','Smart Watches',1),(19,'5hy','trhrty',1);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +122,7 @@ CREATE TABLE `coupons` (
   `discount_type` enum('PERCENTAGE','VALUE') DEFAULT NULL,
   `discount_value` float NOT NULL,
   `expiration_date` datetime(6) DEFAULT NULL,
-  `expiration_type` enum('ALLOWED_USAGE','DATE') DEFAULT NULL,
+  `expiration_type` enum('DATE_BASED','USAGE_BASED') DEFAULT NULL,
   `maximum_allowed_usages` int NOT NULL,
   `min_amount_to_avail` float NOT NULL,
   `status` enum('ACTIVE','EXPIRED') DEFAULT NULL,
@@ -137,7 +136,7 @@ CREATE TABLE `coupons` (
 
 LOCK TABLES `coupons` WRITE;
 /*!40000 ALTER TABLE `coupons` DISABLE KEYS */;
-INSERT INTO `coupons` VALUES ('Children24',1,12,'PERCENTAGE',0,'2024-11-14 05:30:00.000000','DATE',0,599,'EXPIRED'),('First50',2,0,'VALUE',50,NULL,'ALLOWED_USAGE',500,999,'ACTIVE'),('Winter2024',0,10,'PERCENTAGE',0,NULL,'ALLOWED_USAGE',500,499,'ACTIVE');
+INSERT INTO `coupons` VALUES ('Summer2025',0,25,'PERCENTAGE',0,NULL,'USAGE_BASED',0,499,'ACTIVE');
 /*!40000 ALTER TABLE `coupons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,13 +156,13 @@ CREATE TABLE `orders` (
   `order_status` tinyint DEFAULT NULL,
   `total_amount` double NOT NULL,
   `tracking_id` binary(16) DEFAULT NULL,
-  `user_email` varchar(255) DEFAULT NULL,
   `coupon_code` varchar(255) DEFAULT NULL,
+  `user_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
-  UNIQUE KEY `UKl7n21lu8u3f1lc1m3veodbbxk` (`user_email`),
   UNIQUE KEY `UK1pdecr588upiuht0jvaor7gwn` (`coupon_code`),
+  UNIQUE KEY `UKl7n21lu8u3f1lc1m3veodbbxk` (`user_email`),
   CONSTRAINT `FK6fb0ygefktupih6g0e10hkx9a` FOREIGN KEY (`coupon_code`) REFERENCES `coupons` (`coupon_id`),
-  CONSTRAINT `FKmxobdyrbi5tlk6ajxlnb8iopp` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`),
+  CONSTRAINT `FKmxobdyrbi5tlk6ajxlnb8iopp` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE,
   CONSTRAINT `orders_chk_1` CHECK ((`order_status` between 0 and 7))
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -174,7 +173,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,NULL,0,NULL,0,0,219297,NULL,'random@user.com',NULL),(2,NULL,94389,NULL,0,0,95188,NULL,'user@test.com',NULL);
+INSERT INTO `orders` VALUES (1,NULL,0,NULL,0,0,0,NULL,NULL,'user@test.com'),(2,NULL,0,NULL,0,0,0,NULL,NULL,'random@user.com');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-28 17:47:35
+-- Dump completed on 2025-02-08 14:31:26
